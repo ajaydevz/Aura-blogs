@@ -1,0 +1,63 @@
+{% extends "dashboard/dash_base.html" %}
+
+{% load static %}
+{% block body %}
+<section class="user-management-section py-4">
+    <div class="container-xl">
+        <h2 class="mb-4 text-center">User Management</h2>
+
+        <div class="card border-0 shadow-lg rounded-4">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Status</th>
+                                <th scope="col" class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>
+                                    {% if user.is_active %}
+                                        <span class="badge bg-success">Active</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">Blocked</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-center">
+                                    {% comment %} <form action="#" method="post" class="d-inline-block"> {% endcomment %}
+                                        {% comment %} {% csrf_token %} {% endcomment %}
+                                        {% if user.is_active %}
+                                        <a href="{% url 'block_user' user.id %}?action=block">
+                                            <button type="submit" class="btn btn-danger btn-sm me-2">Block</button>
+                                        </a>
+                                        {% else %}
+                                        <a href="{% url 'block_user' user.id %}?action=unblock">
+                                            <button type="submit" class="btn btn-success btn-sm me-2">Unblock</button>
+                                        </a>
+                                        {% endif %}
+                                    {% comment %} </form> {% endcomment %}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center text-muted">No users found.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

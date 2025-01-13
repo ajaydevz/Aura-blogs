@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+{% load static %}
+{% block header %}
+<!-- Header for Profile Page -->
+<header class="header-default">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-xl d-flex justify-content-between">
+            <a class="navbar-brand" href="index.html">
+                {% comment %} <img src="#" alt="logo" /> {% endcomment %}
+                <h2>Aura.</h2>
+            </a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url "category_manage" %}">Add Category</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+{% endblock header %}
+
+<style>
+    /* General Styles */
+    body {
+        background-color: #f4f7fc;
+        font-family: 'Arial', sans-serif;
+        padding: 0;
+        margin: 0;
+    }
+
+    .container {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 30px;
+    }
+
+    .form-container {
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+    }
+
+    /* Heading Styles */
+    .form-container h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    /* Input, Select, Textarea Styling */
+    .custom-input, .custom-select, .custom-textarea {
+        border-radius: 8px;
+        padding: 12px;
+        border: 1px solid #ccc;
+        width: 100%;
+    }
+
+    .custom-input:focus, .custom-select:focus, .custom-textarea:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    .custom-textarea {
+        height: 150px;
+    }
+
+    /* Button Styling */
+    .btn {
+        padding: 12px;
+        font-size: 16px;
+        border-radius: 8px;
+        background-color: #007bff;
+        color: white;
+        width: 100%;
+        border: none;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+        cursor: pointer;
+    }
+
+    .btn:focus {
+        outline: none;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    /* Spacing and alignment */
+    .mb-4 {
+        margin-bottom: 20px;
+    }
+
+    /* Align form elements */
+    .form-label {
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 8px;
+    }
+
+    .row {
+        margin-bottom: 20px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .container {
+            padding: 20px;
+        }
+        .form-container {
+            padding: 20px;
+        }
+    }
+</style>
+
+{% block body %}
+    <div class="container">
+        <div class="form-container">
+            <h2>Add Your Blog Here</h2>
+            {% if messages %}
+            <div class="alert alert-success">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label for="title" class="form-label">Title:</label>
+                    <input type="text" name="title" id="title" required class="form-control custom-input" placeholder="Enter the title of the blog">
+                </div>
+
+                <div class="mb-4">
+                    <label for="image" class="form-label">Image:</label>
+                    <input type="file" name="image" id="image" class="form-control custom-input">
+                </div>
+
+                <div class="mb-4">
+                    <label for="content" class="form-label">Content:</label>
+                    <textarea name="content" id="content" required class="form-control custom-textarea" placeholder="Write your blog content here..."></textarea>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <label for="category" class="form-label">Category:</label>
+                        <select name="category" id="category" class="form-select custom-select">
+                            {% for category in categories %}
+                                <option value="{{ category.id }}">{{ category.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <label for="section" class="form-label">Section:</label>
+                        <select name="section" id="section" class="form-select custom-select">
+                            <option value="Popular">Popular</option>
+                            <option value="Recent">Recent</option>
+                            <option value="Trending">Trending</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <label for="status" class="form-label">Status:</label>
+                        <select name="status" id="status" class="form-select custom-select">
+                            <option value="0">Draft</option>
+                            <option value="1">Publish</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 d-flex align-items-center mb-4">
+                        <label for="main_post" class="form-label mb-0 me-2">Main Post:</label>
+                        <input type="checkbox" name="main_post" id="main_post" class="form-check-input">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn" style="background-color: #0056b3;">Create Blog</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

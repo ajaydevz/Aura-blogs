@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% load static %}
+
+<style>
+    /* Your CSS styles */
+    /* Include styles here if needed */
+</style>
+
+{% block header %}
+<!-- Your header content here -->
+<header class="header-default">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-xl d-flex justify-content-between">
+            <!-- Site Logo -->
+            <a class="navbar-brand" href="index.html">
+                {% comment %} <img src="{% static 'images/logo.svg' %}" alt="logo" /> {% endcomment %}
+                <h2>Aura.</h2>
+            </a>
+
+            <div class="collapse navbar-collapse">
+                <!-- Menus -->
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown active">
+                        <a class="nav-link " href="#">Join Us</a>
+                        {% comment %} <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="index.html">Magazine</a></li>
+                            <li><a class="dropdown-item" href="personal.html">Personal</a></li>
+                            <li><a class="dropdown-item" href="personal-alt.html">Personal Alt</a></li>
+                            <li><a class="dropdown-item" href="minimal.html">Minimal</a></li>
+                            <li><a class="dropdown-item" href="classic.html">Classic</a></li>
+                        </ul> {% endcomment %}
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+{% endblock header %}
+
+{% block body %}
+<!-- Sign Up Page -->
+<section id="signup" class="auth-section py-2">
+    <div class="container-xl">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="auth-card rounded shadow p-4 bg-light">
+                    <h2 class="text-center mb-4">Sign Up</h2>
+                    <form method="post" action=""  enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <!-- Username and Email on the same row -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
+                                <span id="username-error"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                                <span id="email-error"></span>
+                            </div>
+                        </div>
+
+                        <!-- First Name and Last Name on the same row -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="first_name" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="firstname" name="first_name" placeholder="Enter your first name" required>
+                                <span id="firstname-error"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="last_name" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="lastname" name="last_name" placeholder="Enter your last name" required>
+                                <span id="lastname-error"></span>
+                            </div>
+                        </div>
+
+                        <!-- Profile Picture in a separate row -->
+                        <div class="mb-3">
+                            <label for="profile_pic" class="form-label">Profile Picture</label>
+                            <input type="file" class="form-control" id="profile_image" name="profile_image" required>
+                            <span id="image-error"></span>
+                        </div>
+
+                        <!-- Phone Number in a separate row -->
+                        <div class="mb-3">
+                            <label for="contact" class="form-label">Contact Number</label>
+                            <input type="tel" class="form-control" id="contact_number" name="contact_number" placeholder="Enter your contact number" required>
+                            <span id="contact-error"></span>
+                        </div>
+
+                        <!-- Password and Confirm Password on the same row -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password1" name="password" placeholder="Enter your password" required>
+                                <span id="password1-error"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="confirm_password" class="form-label">Confirm Password</label>
+                                <input type="password" class="form-control" id="password2" name="confirm_password" placeholder="Confirm your password" required>
+                                <span id="password2-error"></span>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary w-50">Sign Up</button>
+                        </div>
+                        <p class="text-center mt-3">Already have an account? <a href="{% url "login" %}">Login</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="{% static 'js/signup.js' %}" defer></script>
+{% endblock %}

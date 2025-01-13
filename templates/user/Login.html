@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block header %}
+
+<!-- Header -->
+<header class="header-default">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-xl d-flex justify-content-between">
+            <!-- Site Logo -->
+            <a class="navbar-brand" href="index.html">
+                {% comment %} <img src="{% static 'images/' %}" alt="logo" /> {% endcomment %}
+                <h2>Aura.</h2>
+            </a>
+
+            <div class="collapse navbar-collapse">
+                <!-- Menus -->
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown active">
+                        <a class="nav-link " href="#">Join Us</a>
+                        {% comment %} <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="index.html">Magazine</a></li>
+                            <li><a class="dropdown-item" href="personal.html">Personal</a></li>
+                            <li><a class="dropdown-item" href="personal-alt.html">Personal Alt</a></li>
+                            <li><a class="dropdown-item" href="minimal.html">Minimal</a></li>
+                            <li><a class="dropdown-item" href="classic.html">Classic</a></li>
+                        </ul> {% endcomment %}
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Signup</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+{% endblock header %}
+
+{% block body %}
+<!-- Login Page -->
+<section id="login" class="auth-section py-5">
+    <div class="container-xl">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="auth-card rounded shadow p-4 bg-light">
+                    <h2 class="text-center mb-4">Login</h2>
+                    <form method="post" action="#">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary w-50" style="color: darkblue;">Login</button>
+                        </div>
+                        <p class="text-center mt-3">Don't have an account? <a href="{% url "register" %}">Sign up</a></p>
+                        <p class="text-center"><a href="{% url 'forgot_password' %}">Forgot password?</a></p>
+                    </form>
+
+                    {% for msg in messages %}
+                    <p class="text-center {% if msg.tags %}text-{{ msg.tags }}{% endif %}">
+                        {{ msg }}
+                     </p>
+                    {% endfor %}
+
+                    
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+
