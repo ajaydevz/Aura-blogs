@@ -4,9 +4,10 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.utils.text import slugify
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import never_cache
 # Create your views here.
 
-
+@never_cache
 def Index(request):
 
     post = Blog.objects.filter(is_active=True).order_by('-id')

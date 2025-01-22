@@ -9,6 +9,7 @@ from .models import CustomUser
 from home.models import Blog
 from django.core.mail import send_mail
 from django.contrib.auth.hashers import make_password
+from django.views.decorators.cache import never_cache
 from django.conf import settings
 from django.urls import reverse
 # Create your views here.
@@ -110,6 +111,7 @@ def update_profile(request):
 def admin_required(user):
     return user.is_superuser
 
+@never_cache
 def Dash_home(request):
     post_count = Blog.objects.count()
 
